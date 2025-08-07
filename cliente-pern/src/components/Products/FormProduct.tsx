@@ -33,7 +33,6 @@ function FormProduct() {
                 </div>
             </div>
 
-            {/* Botón de envío */}
             <div className="mt-8 flex justify-end">
                 <button
                     type="submit"
