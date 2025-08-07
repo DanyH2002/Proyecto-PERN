@@ -1,0 +1,35 @@
+import express from 'express';
+import router from './router';
+import db from './config/db';
+import colors from 'colors';
+import swaggerSpect, { swaggerUiOptions } from './config/swagger';
+import swaggerUi from 'swagger-ui-express';
+
+export async function connectDB() {
+    try {
+        await db.authenticate();
+        db.sync();
+        console.log(colors.cyan.bold("Conexión a la base de datos establecida correctamente"));
+    }
+    catch (error) {
+        console.log(colors.white.bgRed.bold("No se pudo conectar a la base de datos"));
+    }
+}
+
+connectDB();
+
+// Instacia del servidor
+const server = express();
+
+// leer datos de formulario
+server.use(express.json());
+
+server.use('/api', router);
+
+//Docs
+server.use('/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpect, swaggerUiOptions)
+)
+
+export default server 
