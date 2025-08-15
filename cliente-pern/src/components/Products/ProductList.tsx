@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function ProductList() {
     const products = [
         { id: "1", name: "Camiseta", price: 199.99 },
@@ -9,11 +11,11 @@ function ProductList() {
         <div className="max-w-6xl mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-gray-900">Lista de Productos</h2>
-                <button
+                <Link to='/productos/nuevo'
                     className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     + Agregar Producto
-                </button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -29,7 +31,7 @@ function ProductList() {
 
                         <div className="mt-4 flex justify-end space-x-2">
                             {/* <button className="text-indigo-600 hover:underline text-sm">Ver</button> */}
-                            <button className="text-yellow-600 hover:underline text-sm">Editar</button>
+                            <Link to="producto/editar/${product.id}" className="text-yellow-600 hover:underline text-sm">Editar</Link>
                         </div>
                     </div>
                 ))}

@@ -2,6 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Registros from "./views/Registros";
 import NuevoRegistro from "./views/NuevoRegistro";
+import ProductList from "./components/Products/ProductList";
+import UserList from "./components/Users/UserList";
+import FormProduct from "./components/Products/FormProduct";
+import FormUser from "./components/Users/FormUser";
 
 export const router = createBrowserRouter([
     {
@@ -15,7 +19,27 @@ export const router = createBrowserRouter([
             {
                 path: 'registro/nuevo',
                 element: <NuevoRegistro />
+            },
+            {
+                path: '/productos',
+                element: <ProductList />
+            },
+            {
+                path: 'productos/nuevo',
+                element: <FormProduct />
+            },
+            {
+                path: 'producto/editar/:id',
+                element: <FormProduct />
+            },
+            {
+                path: '/usuarios',
+                element: <UserList />
+            },
+            {
+                path: 'usuarios/nuevo',
+                element: <FormUser />
             }
         ]
     }
-])
+]);

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function FormUser() {
     return (
         <form className="max-w-2xl mx-auto px-4 py-8">
@@ -48,12 +50,12 @@ function FormUser() {
             </div>
 
             <div className="mt-8 flex justify-end">
-                <button
+                <Link to='usuarios'
                     type="submit"
                     className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     Guardar
-                </button>
+                </Link>
             </div>
         </form>
     );
