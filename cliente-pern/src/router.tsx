@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Registros from "./views/Registros";
-import NuevoRegistro from "./views/NuevoRegistro";
+import NuevoRegistro, { generarRegistro } from "./views/NuevoRegistro";
 import ProductList from "./components/Products/ProductList";
 import UserList from "./components/Users/UserList";
 import FormProduct from "./components/Products/FormProduct";
@@ -18,7 +18,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'registro/nuevo',
-                element: <NuevoRegistro />
+                element: <NuevoRegistro />,
+                action: generarRegistro
             },
             {
                 path: '/productos',
