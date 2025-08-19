@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function UserList() {
     const user = [
         { id: "1", username: "Daniela", email: "daniela01@gmail.com", password: "123abc" },
@@ -9,11 +11,11 @@ function UserList() {
         <div className="max-w-6xl mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-gray-900">Lista de Usuarios</h2>
-                <button
+                <Link to='/usuarios/nuevo'
                     className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     + Agregar Usuario
-                </button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

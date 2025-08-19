@@ -31,7 +31,9 @@ function ProductList() {
 
                         <div className="mt-4 flex justify-end space-x-2">
                             {/* <button className="text-indigo-600 hover:underline text-sm">Ver</button> */}
-                            <Link to="producto/editar/${product.id}" className="text-yellow-600 hover:underline text-sm">Editar</Link>
+                            <Link to={`/producto/editar/${product.id}`} className="text-yellow-600 hover:underline text-sm">
+                                Editar
+                            </Link>
                         </div>
                     </div>
                 ))}

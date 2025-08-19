@@ -4,8 +4,8 @@ import Registros from "./views/Registros";
 import NuevoRegistro, { generarRegistro } from "./views/NuevoRegistro";
 import ProductList from "./components/Products/ProductList";
 import UserList from "./components/Users/UserList";
-import FormProduct from "./components/Products/FormProduct";
-import FormUser from "./components/Users/FormUser";
+import FormProduct, { generarProducto } from "./components/Products/FormProduct";
+import FormUser, { generarUsuario } from "./components/Users/FormUser";
 
 export const router = createBrowserRouter([
     {
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
                 element: <Registros />
             },
             {
-                path: 'registro/nuevo',
+                path: '/registro/nuevo',
                 element: <NuevoRegistro />,
                 action: generarRegistro
             },
@@ -26,11 +26,12 @@ export const router = createBrowserRouter([
                 element: <ProductList />
             },
             {
-                path: 'productos/nuevo',
-                element: <FormProduct />
+                path: '/productos/nuevo',
+                element: <FormProduct />,
+                action: generarProducto
             },
             {
-                path: 'producto/editar/:id',
+                path: '/producto/editar/:id',
                 element: <FormProduct />
             },
             {
@@ -38,8 +39,9 @@ export const router = createBrowserRouter([
                 element: <UserList />
             },
             {
-                path: 'usuarios/nuevo',
-                element: <FormUser />
+                path: '/usuarios/nuevo',
+                element: <FormUser />,
+                action: generarUsuario
             }
         ]
     }
