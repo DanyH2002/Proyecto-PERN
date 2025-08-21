@@ -3,7 +3,8 @@ import router from './router';
 import db from './config/db';
 import colors from 'colors';
 import swaggerSpect, { swaggerUiOptions } from './config/swagger';
-import swaggerUi from 'swagger-ui-express';
+import swaggerUi, { serve } from 'swagger-ui-express';
+import cors from 'cors';
 
 export async function connectDB() {
     try {
@@ -20,6 +21,13 @@ connectDB();
 
 // Instacia del servidor
 const server = express();
+
+// Configuracion de CORS
+server.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: false
+}))
 
 // leer datos de formulario
 server.use(express.json());

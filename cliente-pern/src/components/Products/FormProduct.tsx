@@ -1,5 +1,7 @@
 import { Link, Form, ActionFunctionArgs, useActionData } from 'react-router-dom'
 import ErrorMessage from '../ErrorMessage';
+import SucessMessage from '../SucessMessage';
+import { addProduct } from '../../services/ProductService';
 
 export async function generarProducto({ request }: ActionFunctionArgs) {
     const data = Object.fromEntries(await request.formData());
@@ -9,16 +11,22 @@ export async function generarProducto({ request }: ActionFunctionArgs) {
     }
     if (error.length) {
         console.log(error);
-        return error;
+        return { error };
     }
-    return {};
+    try {
+        await addProduct(data);
+        return { success: true };
+    } catch (error) {
+        return { error: 'Error al guardar el producto. Intenta nuevamente.' };
+    }
 }
 
 function FormProduct() {
-    const error = useActionData() as String
+    const actionData = useActionData() as { error?: string; success?: boolean };
     return (
         <>
-            {error && <ErrorMessage> {error}</ErrorMessage>}
+            {actionData?.error && <ErrorMessage>{actionData.error}</ErrorMessage>}
+            {actionData?.success && <SucessMessage>Producto guardado correctamente</SucessMessage>}
             <h2 className="text-xl font-semibold text-gray-900 mb-6 flex justify-center p-3">Registro de Productos</h2>
             <Form className="max-w-2xl mx-auto px-4 py-8" method='POST'>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
