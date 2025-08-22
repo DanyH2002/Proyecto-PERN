@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { object, string, number, minLength, minValue, pipe, safeParse } from 'valibot';
+import { Product } from '../types/Product';
 
 export const DraftProductSchema = object({
     name: pipe(string(), minLength(1, 'El nombre es obligatorio')),
@@ -33,7 +34,19 @@ export async function addProduct(data: ProductData) {
 
         return response.data;
     } catch (error) {
-        console.error('Error al agregar producto:', error);
+        console.log('Error al agregar producto:', error);
+        throw error;
+    }
+}
+
+export async function getProducts(): Promise<Product[]> {
+    try {
+        const url = `${BASE_URL}/products`;
+        const response = await axios.get(url);
+        console.log(response)
+        return response.data.data;
+    } catch (error) {
+        console.log("Error al obtener la lista de productos: ", error);
         throw error;
     }
 }
