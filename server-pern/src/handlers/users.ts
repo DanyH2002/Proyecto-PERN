@@ -56,25 +56,25 @@ export const updateUser = async (req: Request, res: Response) => {
         if (!user || !user.isActive) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        const { username_V, email_V } = req.body;
+        const { username, email } = req.body;
         if (req.body.password) {
             return res.status(400).json({ error: 'No se puede actualizar la contraseña directamente.' });
         }
-        if (username_V !== user.username) {
-            const existingUser = await User.findOne({ where: { username: username_V } });
+        if (username !== user.username) {
+            const existingUser = await User.findOne({ where: { username: username } });
             if (existingUser) {
                 return res.status(400).json({ error: 'El nombre de usuario ya está en uso.' });
             }
         }
-        if (email_V !== user.email) {
-            const existingEmail = await User.findOne({ where: { email: email_V } });
+        if (email !== user.email) {
+            const existingEmail = await User.findOne({ where: { email: email } });
             if (existingEmail) {
                 return res.status(400).json({ error: 'El correo electrónico ya está en uso.' });
             }
         }
-        user.username = req.body.username_V;
-        user.email = req.body.email_V;
-        user.role = req.body.role_V;
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.role = req.body.role;
         await user.save();
         res.json({ data: user });
     } catch (error) {

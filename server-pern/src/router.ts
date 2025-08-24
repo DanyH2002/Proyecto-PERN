@@ -384,122 +384,87 @@ router.post('/users',
         .isIn(['admin', 'user']).withMessage('El rol debe ser "admin" o "user"'),
     handleInputErrors, createUser);
 
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   put:
-//  *     summary: Actualizar completamente un usuario
-//  *     tags:
-//  *       - Users
-//  *     description: Actualiza toda la información de un usuario existente
-//  *     parameters:
-//  *       - name: id
-//  *         in: path
-//  *         required: true
-//  *         description: ID del usuario a actualizar
-//  *         schema:
-//  *           type: integer
-//  *           minimum: 1
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             required:
-//  *               - id
-//  *               - username_V
-//  *               - email_V
-//  *               - role_V
-//  *             properties:
-//  *               id:
-//  *                 type: integer
-//  *                 minimum: 1
-//  *                 description: ID del usuario (debe coincidir con el ID en la URL)
-//  *                 example: 1
-//  *               username_V:
-//  *                 type: string
-//  *                 minLength: 3
-//  *                 maxLength: 100
-//  *                 description: Nuevo nombre de usuario
-//  *                 example: newusername
-//  *               email_V:
-//  *                 type: string
-//  *                 format: email
-//  *                 description: Nuevo correo electrónico
-//  *                 example: newemail@example.com
-//  *               role_V:
-//  *                 type: string
-//  *                 enum: [admin, user]
-//  *                 description: Nuevo rol del usuario
-//  *                 example: admin
-//  *     responses:
-//  *       200:
-//  *         description: Usuario actualizado exitosamente
-//  *       400:
-//  *         description: Datos de entrada inválidos
-//  *       404:
-//  *         description: Usuario no encontrado
-//  */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Actualizar completamente un usuario
+ *     tags:
+ *       - Users
+ *     description: Actualiza toda la información de un usuario existente
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del usuario a actualizar
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: newusername
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: newemail@example.com
+ *               role:
+ *                 type: string
+ *                 enum: [admin, user]
+ *                 example: admin
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado exitosamente
+ *       400:
+ *         description: Datos de entrada inválidos
+ *       404:
+ *         description: Usuario no encontrado
+ */
 router.put('/users/:id',
     param('id')
         .notEmpty().withMessage('El ID del usuario es obligatorio')
         .isNumeric().withMessage('El ID debe ser un número')
         .custom(value => value > 0).withMessage('El ID debe ser mayor que 0'),
-    body('id')
-        .notEmpty().withMessage('El ID del producto es obligatorio')
-        .isNumeric().withMessage('El ID debe ser un número')
-        .custom(value => value > 0).withMessage('El ID debe ser mayor que 0')
-        .custom((value, { req }) => value == req.params.id).withMessage('El ID del producto debe coincidir con el ID en la URL'),
-    body('username_V')
+    body('username')
         .notEmpty().withMessage('El nombre de usuario es obligatorio')
         .isLength({ min: 3 }).withMessage('El nombre de usuario debe tener al menos 3 caracteres')
         .isLength({ max: 100 }).withMessage('El nombre de usuario no puede tener más de 100 caracteres'),
-    body('email_V')
+    body('email')
         .notEmpty().withMessage('El correo electrónico es obligatorio')
         .isEmail().withMessage('Debe proporcionar un correo electrónico válido'),
-    body('role_V')
+    body('role')
         .notEmpty().withMessage('El rol es obligatorio')
         .isIn(['admin', 'user']).withMessage('El rol debe ser "admin" o "user"'),
     handleInputErrors, updateUser);
 
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   patch:
-//  *     summary: Actualizar el estado activo de un usuario
-//  *     tags:
-//  *       - Users
-//  *     description: Cambia el estado activo/inactivo de un usuario
-//  *     parameters:
-//  *       - name: id
-//  *         in: path
-//  *         required: true
-//  *         description: ID del usuario a actualizar
-//  *         schema:
-//  *           type: integer
-//  *           minimum: 1
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             required:
-//  *               - active
-//  *             properties:
-//  *               active:
-//  *                 type: boolean
-//  *                 description: Nuevo estado del usuario (true/false)
-//  *                 example: false
-//  *     responses:
-//  *       200:
-//  *         description: Estado del usuario actualizado exitosamente
-//  *       400:
-//  *         description: Datos de entrada inválidos
-//  *       404:
-//  *         description: Usuario no encontrado
-//  */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   patch:
+ *     summary: Actualizar el estado activo de un usuario
+ *     tags:
+ *       - Users
+ *     description: Cambia el estado activo/inactivo de un usuario
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario a actualizar
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Estado del usuario actualizado exitosamente
+ *       400:
+ *         description: Datos de entrada inválidos
+ *       404:
+ *         description: Usuario no encontrado
+ */
 router.patch('/users/:id',
     param('id')
         .notEmpty().withMessage('El ID del usuario es obligatorio')
@@ -507,30 +472,30 @@ router.patch('/users/:id',
         .custom(value => value > 0).withMessage('El ID debe ser mayor que 0'),
     handleInputErrors, updateActiveUser);
 
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   delete:
-//  *     summary: Eliminar un usuario
-//  *     tags:
-//  *       - Users
-//  *     description: Elimina un usuario existente por su ID
-//  *     parameters:
-//  *       - name: id
-//  *         in: path
-//  *         required: true
-//  *         description: ID del usuario a eliminar
-//  *         schema:
-//  *           type: integer
-//  *           minimum: 1
-//  *     responses:
-//  *       200:
-//  *         description: Usuario eliminado exitosamente
-//  *       400:
-//  *         description: ID inválido proporcionado
-//  *       404:
-//  *         description: Usuario no encontrado
-//  */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Eliminar un usuario
+ *     tags:
+ *       - Users
+ *     description: Elimina un usuario existente por su ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario a eliminar
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado exitosamente
+ *       400:
+ *         description: ID inválido proporcionado
+ *       404:
+ *         description: Usuario no encontrado
+ */
 router.delete('/users/:id',
     param('id')
         .notEmpty().withMessage('El ID del usuario es obligatorio')

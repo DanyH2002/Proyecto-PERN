@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Product } from '../../types/Product';
-import { getProducts } from '../../services/ProductService';
+import { getProducts, deleteProduct } from '../../services/ProductService';
+import AlertMessage from '../AlertMessage';
 
 function ProductList() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [confirmId, setConfirmId] = useState<string | null>(null);
 
     useEffect(() => {
         getProducts()
@@ -20,6 +22,18 @@ function ProductList() {
             .catch(() => setError('Error al cargar productos'))
             .finally(() => setLoading(false));
     }, []);
+
+    const confirmDelete = async () => {
+        if (!confirmId) return;
+        try {
+            await deleteProduct(confirmId);
+            setProducts(prev => prev.filter(product => String(product.id) !== confirmId));
+        } catch {
+            setError('Error al eliminar el producto');
+        } finally {
+            setConfirmId(null);
+        }
+    };
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
@@ -56,10 +70,23 @@ function ProductList() {
                             >
                                 Editar
                             </Link>
+                            <button
+                                onClick={() => setConfirmId(String(product.id))}
+                                className="text-red-600 hover:underline text-sm"
+                            >
+                                Eliminar
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
+            {confirmId && (
+                <AlertMessage
+                    message="¿Estás segura de que quieres eliminar este producto?"
+                    onConfirm={confirmDelete}
+                    onCancel={() => setConfirmId(null)}
+                />
+            )}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { object, string, number, minLength, minValue, pipe, safeParse } from 'valibot';
-import { Product } from '../types/Product';
+import type { Product } from '../types/Product';
 
 export const DraftProductSchema = object({
     name: pipe(string(), minLength(1, 'El nombre es obligatorio')),
@@ -47,6 +47,52 @@ export async function getProducts(): Promise<Product[]> {
         return response.data.data;
     } catch (error) {
         console.log("Error al obtener la lista de productos: ", error);
+        throw error;
+    }
+}
+
+export async function getProductById(id: string): Promise<Product> {
+    try {
+        const url = `${BASE_URL}/products/${id}`;
+        const response = await axios.get(url);
+        return response.data.data;
+    } catch (error) {
+        console.log("Error al cargar datos del producto: ", error);
+        throw error;
+    }
+
+}
+
+export async function updateProduct(id: string, data: ProductData): Promise<Product> {
+    try {
+        const parsed = safeParse(DraftProductSchema, {
+            name: String(data.name),
+            price: Number(data.price)
+        });
+
+        if (!parsed.success) {
+            const messages = parsed.issues.map(issue => issue.message).join(', ');
+            throw new Error(messages);
+        }
+
+        const url = `${BASE_URL}/products/${id}`;
+        const response = await axios.put(url, {
+            name: parsed.output.name,
+            price: parsed.output.price
+        });
+        return response.data;
+    } catch (error) {
+        console.log("Error al actualizar el producto: " , error);
+        throw error;
+    }
+}
+
+export async function deleteProduct(id: string): Promise<void> {
+    try {
+        const url = `${BASE_URL}/products/${id}`;
+        await axios.delete(url);
+    } catch (error) {
+        console.log('Error al eliminar el producto:', error);
         throw error;
     }
 }
