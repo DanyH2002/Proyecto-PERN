@@ -17,32 +17,37 @@ export default function RootLayout() {
 
   const styles = StyleSheet.create({
     titulo: {
-      fontSize: 30,
-      fontWeight: '600',
+      fontSize: 32,
+      fontWeight: '700',
       textAlign: 'center',
-      marginTop: 30
+      marginBottom: 30,
+      color: 'dark',
     },
     entrada: {
-      height: 40,
-      margin: 12,
+      height: 45,
+      borderRadius: 8,
       borderWidth: 1,
-      padding: 10,
+      borderColor: '#cccccc',
+      paddingHorizontal: 12,
+      backgroundColor: '#ffffff',
+      marginBottom: 20,
     },
     titulos: {
-      fontSize: 20,
-      fontWeight: '400',
-      textAlign: 'center',
-      marginTop: 20
+      fontSize: 18,
+      fontWeight: '500',
+      marginBottom: 8,
     },
     boton: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 15,
-      padding: 10,
-      borderWidth: StyleSheet.hairlineWidth,
-      borderColor: '#f0f0f0',
-      backgroundColor: 'gray',
-      color: 'white'
+      backgroundColor: '#007AFF',
+      paddingVertical: 12,
+      borderRadius: 8,
+      alignItems: 'center',
+      marginTop: 10,
+    },
+    botonTexto: {
+      color: '#ffffff',
+      fontSize: 18,
+      fontWeight: '600',
     }
   })
 
@@ -68,8 +73,10 @@ export default function RootLayout() {
           placeholder='Nombre del paciente'
           value={paciente}
           onChangeText={setPaciente}></TextInput>
-        <Pressable onPress={() => console.log("Servicio: " + servicio + " Paciente: " + paciente)}>
-          <Text style={styles.boton}>{text}</Text>
+        <Pressable 
+        style={styles.boton} 
+        onPress={() => console.log("Servicio: " + servicio + " Paciente: " + paciente)}>
+          <Text style={styles.botonTexto}>{text}</Text>
         </Pressable>
       </SafeAreaView>
     </>
