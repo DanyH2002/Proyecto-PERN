@@ -48,7 +48,6 @@ export default function RootLayout() {
 
   const [servicio, setServicio] = useState('');
   const [paciente, setPaciente] = useState('');
-  const [press, SetPress] = useState(0);
 
   let text = "hola";
 
