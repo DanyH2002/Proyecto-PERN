@@ -33,12 +33,24 @@ export default function RootLayout() {
       fontWeight: '400',
       textAlign: 'center',
       marginTop: 20
+    },
+    boton: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 15,
+      padding: 10,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: '#f0f0f0',
+      backgroundColor: 'gray',
+      color: 'white'
     }
   })
-  
-  // const []
-  let text = "hola";
 
+  const [servicio, setServicio] = useState('');
+  const [paciente, setPaciente] = useState('');
+  const [press, SetPress] = useState(0);
+
+  let text = "hola";
 
   return (
     <>
@@ -46,15 +58,23 @@ export default function RootLayout() {
         <Text style={styles.titulo}>Hola Mundo</Text>
         {/* <Button title='Mostrar'>Holis</Button> */}
         <Text style={styles.titulos}>Servicio</Text>
-        <TextInput style={styles.entrada} placeholder='Nombre derl servicio'></TextInput>
+        <TextInput
+          style={styles.entrada}
+          placeholder='Nombre derl servicio'
+          value={servicio}
+          onChangeText={setServicio}></TextInput>
         <Text style={styles.titulos}>Paciente</Text>
-        <TextInput style={styles.entrada} placeholder='Nombre del paciente'></TextInput>
-        <Pressable onPress={()=>console.log('llega')}>
-          <Text>{text}</Text>
+        <TextInput
+          style={styles.entrada}
+          placeholder='Nombre del paciente'
+          value={paciente}
+          onChangeText={setPaciente}></TextInput>
+        <Pressable onPress={() => console.log("Servicio: " + servicio + " Paciente: " + paciente)}>
+          <Text style={styles.boton}>{text}</Text>
         </Pressable>
       </SafeAreaView>
-
     </>
+
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     //   <Stack>
     //     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
